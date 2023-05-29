@@ -1,10 +1,9 @@
 import * as WalkerSpace from "./walker-space.js";
-import { walker } from "./walker.js";
 import * as Controls from "./controls.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  walker.setSpeed(Controls.getSpeedControlValue());
-  WalkerSpace.draw();
+  WalkerSpace.setSpeed(Controls.getSpeedControlValue());
+  WalkerSpace.update();
 });
 
 Controls.addLoopControlListener((event) => {
@@ -16,7 +15,7 @@ Controls.addLoopControlListener((event) => {
 });
 
 Controls.addSpeedControlListener((event) => {
-  walker.setSpeed(event.speed);
+  WalkerSpace.setSpeed(event.speed);
 });
 
 const mainLoop = {
@@ -39,6 +38,5 @@ function run(time) {
 }
 
 function update() {
-  walker.walk();
-  WalkerSpace.draw();
+  WalkerSpace.update();
 }

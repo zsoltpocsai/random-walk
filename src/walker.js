@@ -3,29 +3,13 @@ const walker = {
   posY: 0,
   moveToSkip: 5,
   skippedMove: 0,
-  walk() {
+  getNextStep() {
     if (this.skippedMove >= this.moveToSkip) {
-      this.move();
       this.skippedMove = 0;
+      return random_direction();
     } else {
       this.skippedMove += 1;
-    }
-  },
-  move() {
-    const move = random_move();
-    switch (move) {
-      case MOVE.UP:
-        this.posY -= 1;
-        break;
-      case MOVE.DOWN:
-        this.posY += 1;
-        break;
-      case MOVE.RIGHT:
-        this.posX += 1;
-        break;
-      case MOVE.LEFT:
-        this.posX -= 1;
-        break;
+      return undefined;
     }
   },
   setSpeed(speed) {
@@ -36,14 +20,7 @@ const walker = {
   }
 };
 
-const MOVE = {
-  UP: 1,
-  DOWN: 2,
-  RIGHT: 3,
-  LEFT: 4,
-};
-
-function random_move() {
+function random_direction() {
   const rnd = Math.floor((Math.random() * 4) + 1);
   return rnd;
 }
