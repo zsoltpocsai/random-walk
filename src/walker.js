@@ -1,9 +1,7 @@
-const WALKER_SIZE = 2;
-const WALKER_COLOR = "black";
-
 const walker = {
   posX: 0,
   posY: 0,
+  size: 2,
   walk() {
     const move = random_move();
     switch (move) {
@@ -38,26 +36,4 @@ function random_move() {
   return rnd;
 }
 
-function test_random() {
-  const stat = [0, 0, 0, 0];
-  for (let i = 0; i < 200; i++) {
-    const move = random_move();
-    stat[move - 1] += 1;
-  }
-  console.log(`Random test: ${stat}`);
-}
-
-function test_walk() {
-  console.log("Walk test:")
-  for (let i = 0; i < 20; i++) {
-    walker.walk();
-    walker.printPosition();
-  }
-}
-
-export function execute_tests() {
-  test_random();
-  test_walk();
-}
-
-export { walker, WALKER_SIZE };
+export { walker };
