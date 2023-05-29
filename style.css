@@ -1,3 +1,26 @@
+body {
+  display: flex;
+}
+
 canvas {
   border: 1px black solid;
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+#controls > div {
+  padding: 0.5rem;
+}
+
+#loop-control > button {
+  padding: 0.5rem 1rem;
+}
+
+#speed-control {
+  display: flex;
+  flex-direction: column;
 }

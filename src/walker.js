@@ -1,8 +1,17 @@
 const walker = {
   posX: 0,
   posY: 0,
-  size: 2,
+  moveToSkip: 5,
+  skippedMove: 0,
   walk() {
+    if (this.skippedMove >= this.moveToSkip) {
+      this.move();
+      this.skippedMove = 0;
+    } else {
+      this.skippedMove += 1;
+    }
+  },
+  move() {
     const move = random_move();
     switch (move) {
       case MOVE.UP:
@@ -18,6 +27,9 @@ const walker = {
         this.posX -= 1;
         break;
     }
+  },
+  setSpeed(speed) {
+    this.moveToSkip = Math.abs(speed - 10);
   },
   printPosition() {
     console.log(`(${this.posX}, ${this.posY})`);

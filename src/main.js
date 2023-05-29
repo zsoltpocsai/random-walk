@@ -1,9 +1,22 @@
 import * as WalkerSpace from "./walker-space.js";
 import { walker } from "./walker.js";
+import * as Controls from "./controls.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  mainLoop.start();
-  setInterval(() => mainLoop.stop(), 5000);
+  walker.setSpeed(Controls.getSpeedControlValue());
+  WalkerSpace.draw();
+});
+
+Controls.addLoopControlListener((event) => {
+  if (event.start) {
+    mainLoop.start();
+  } else {
+    mainLoop.stop();
+  }
+});
+
+Controls.addSpeedControlListener((event) => {
+  walker.setSpeed(event.speed);
 });
 
 const mainLoop = {
@@ -20,6 +33,7 @@ const mainLoop = {
 function run(time) {
   update();
   if (mainLoop.started) {
+    mainLoop.frameCount = 0;
     window.requestAnimationFrame(run);
   }
 }
