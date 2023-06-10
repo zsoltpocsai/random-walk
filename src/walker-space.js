@@ -2,8 +2,8 @@ import * as Canvas from "./canvas.js";
 import { walker } from "./walker.js";
 import * as Direction from "./direction.js";
 
-const SPACE_WIDTH = 30;
-const SPACE_HEIGHT = 30;
+const SPACE_WIDTH = 16;
+const SPACE_HEIGHT = 16;
 const SCALE_FACTOR = 10;
 
 Canvas.setSize(SPACE_WIDTH * SCALE_FACTOR, SPACE_HEIGHT * SCALE_FACTOR);
@@ -29,8 +29,8 @@ function createSpace(width, height) {
 }
 
 function addWalker(x, y) {
-  walker.posY = y;
-  walker.posX = x;
+  walker.pos.y = y;
+  walker.pos.x = x;
   space[y][x].push(walker);
 }
 
@@ -38,20 +38,23 @@ function removeWalker(x, y) {
   const elements = space[y][x];
   const idx = elements.indexOf(walker);
   if (idx >= 0) {
-    elements.splice(elements.indexOf(walker), 1);
+    elements.splice(idx, 1);
   }
 }
 
 function moveWalker(direction) {
-  const newPosition = Direction.stepToDirection(walker.posX, walker.posY, direction);
-  const x = newPosition[0];
-  const y = newPosition[1];
-  if ((x >= 0 && x <= SPACE_WIDTH) &&
-      (y >= 0 && y <= SPACE_HEIGHT)) {
-    
-    removeWalker(walker.posX, walker.posY);
-    addWalker(x, y);
+  const newPosition = Direction.stepFromPositionToDirection(walker.pos, direction);
+  if (isInsideOfSpaceBoundary(newPosition)) {
+    removeWalker(walker.pos.x, walker.pos.y);
+    addWalker(newPosition.x, newPosition.y);
   }
+}
+
+function isInsideOfSpaceBoundary(position) {
+  const x = position.x;
+  const y = position.y;
+  return ((x >= 0 && x <= SPACE_WIDTH) &&
+          (y >= 0 && y <= SPACE_HEIGHT));
 }
 
 function draw() {
