@@ -1,3 +1,5 @@
+import { Position } from "./common.js";
+
 const DIRECTION = {
   UP: 1,
   DOWN: 2,
@@ -5,19 +7,24 @@ const DIRECTION = {
   LEFT: 4,
 };
 
-function stepToDirection(x, y, direction) {
+function stepFromPositionToDirection(pos, direction) {
   switch (direction) {
     case DIRECTION.UP:
-      return [x, y - 1];
+      return new Position(pos.x, pos.y - 1);
     case DIRECTION.DOWN:
-      return [x, y + 1];
+      return new Position(pos.x, pos.y + 1);
     case DIRECTION.RIGHT:
-      return [x + 1, y];
+      return new Position(pos.x + 1, pos.y);
     case DIRECTION.LEFT:
-      return [x - 1, y];
+      return new Position(pos.x -1, pos.y);
     default:
-      return [x, y];
+      return new Position(pos.x, pos.y);
   }
 }
 
-export { DIRECTION, stepToDirection };
+function getRandomDirection() {
+  const rnd = Math.floor((Math.random() * 4) + 1);
+  return rnd;
+}
+
+export { DIRECTION, stepFromPositionToDirection, getRandomDirection };
