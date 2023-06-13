@@ -33,8 +33,7 @@ function isPositionInsideOfSpaceBoundary(position) {
 }
 
 function draw() {
-  Canvas.clear();
-
+  
   // drawing walker
   Canvas.drawSquare(
     walker.pos.x * SCALE_FACTOR, 
@@ -51,4 +50,4 @@ function update() {
   draw();
 }
 
-export { update };
+export { update, SCALE_FACTOR };

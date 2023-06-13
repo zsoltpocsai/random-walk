@@ -1,13 +1,17 @@
 import * as WalkerSpace from "./walker-space.js";
 import * as Controls from "./controls.js";
-import { walker, MAX_SPEED, MIN_SPEED } from "./walker.js";
+import * as Walker from "./walker.js";
+import * as Trail from "./trail.js";
+import * as Canvas from "./canvas.js";
+
+const walker = Walker.walker;
 
 document.addEventListener("DOMContentLoaded", () => {
   walker.setSpeed(Controls.getSpeedControlValue());
   WalkerSpace.update();
 });
 
-Controls.setSpeedControlRange(MIN_SPEED, MAX_SPEED);
+Controls.setSpeedControlRange(Walker.MIN_SPEED, Walker.MAX_SPEED);
 
 Controls.addLoopControlListener((event) => {
   if (event.start) {
@@ -19,6 +23,10 @@ Controls.addLoopControlListener((event) => {
 
 Controls.addSpeedControlListener((event) => {
   walker.setSpeed(Controls.getSpeedControlValue());
+});
+
+Walker.addWalkerMoveListener(() => {
+  Trail.update(walker.pos);
 });
 
 const mainLoop = {
@@ -40,5 +48,7 @@ function run() {
 }
 
 function update() {
+  Canvas.clear();
+  Trail.draw();
   WalkerSpace.update();
 }

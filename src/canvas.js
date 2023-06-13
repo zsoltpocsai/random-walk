@@ -11,8 +11,8 @@ function clear() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawSquare(x, y, size) {
-  ctx.fillStyle = "black";
+function drawSquare(x, y, size, color = "black") {
+  ctx.fillStyle = color;
   ctx.fillRect(x, y, size, size);
 }
 

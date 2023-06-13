@@ -30,7 +30,11 @@ const walkerMove = {
   next() {
     if (this.skippedMove >= this.moveToSkip) {
       this.skippedMove = 0;
-      return getRandomDirection();
+      const direction = getRandomDirection();
+      if (walkerMoveListener) {
+        walkerMoveListener();
+      }
+      return direction;
     } else {
       this.skippedMove += 1;
       return undefined;
@@ -38,4 +42,10 @@ const walkerMove = {
   }
 }
 
-export { walker, MAX_SPEED, MIN_SPEED };
+let walkerMoveListener = undefined;
+
+function addWalkerMoveListener(listener) {
+  walkerMoveListener = listener;
+}
+
+export { walker, MAX_SPEED, MIN_SPEED, addWalkerMoveListener };
