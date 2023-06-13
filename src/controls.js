@@ -19,6 +19,11 @@ function printSpeed(value) {
 
 const speedControlListeners = [];
 
+export function setSpeedControlRange(min, max) {
+  speedControlInput.min = min;
+  speedControlInput.max = max;
+}
+
 export function getSpeedControlValue() {
   return speedControlInput.value;
 }

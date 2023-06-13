@@ -1,10 +1,13 @@
 import * as WalkerSpace from "./walker-space.js";
 import * as Controls from "./controls.js";
+import { walker, MAX_SPEED, MIN_SPEED } from "./walker.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  WalkerSpace.setSpeed(Controls.getSpeedControlValue());
+  walker.setSpeed(Controls.getSpeedControlValue());
   WalkerSpace.update();
 });
+
+Controls.setSpeedControlRange(MIN_SPEED, MAX_SPEED);
 
 Controls.addLoopControlListener((event) => {
   if (event.start) {
@@ -15,7 +18,7 @@ Controls.addLoopControlListener((event) => {
 });
 
 Controls.addSpeedControlListener((event) => {
-  WalkerSpace.setSpeed(event.speed);
+  walker.setSpeed(Controls.getSpeedControlValue());
 });
 
 const mainLoop = {
@@ -29,10 +32,9 @@ const mainLoop = {
   }
 }
 
-function run(time) {
+function run() {
   update();
   if (mainLoop.started) {
-    mainLoop.frameCount = 0;
     window.requestAnimationFrame(run);
   }
 }

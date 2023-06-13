@@ -3,9 +3,31 @@ import { Position } from "./common.js";
 
 const walker = {
   pos: new Position(0, 0),
-  moveToSkip: 5,
+  nextDirection() {
+    return walkerMove.next();
+  },
+  setSpeed(speed) {
+    walkerMove.setSpeed(speed);
+  },
+  setPosition(pos) {
+    this.pos.x = pos.x;
+    this.pos.y = pos.y;
+  },
+  printPosition() {
+    console.log(`(${this.posX}, ${this.posY})`);
+  }
+};
+
+const MAX_SPEED = 10;
+const MIN_SPEED = 1;
+
+const walkerMove = {
+  moveToSkip: MAX_SPEED / 2,
   skippedMove: 0,
-  getNextStep() {
+  setSpeed(speed) {
+    this.moveToSkip = Math.abs(speed - MAX_SPEED);
+  },
+  next() {
     if (this.skippedMove >= this.moveToSkip) {
       this.skippedMove = 0;
       return getRandomDirection();
@@ -13,13 +35,7 @@ const walker = {
       this.skippedMove += 1;
       return undefined;
     }
-  },
-  setSpeed(speed) {
-    this.moveToSkip = Math.abs(speed - 10);
-  },
-  printPosition() {
-    console.log(`(${this.posX}, ${this.posY})`);
   }
-};
+}
 
-export { walker };
+export { walker, MAX_SPEED, MIN_SPEED };
