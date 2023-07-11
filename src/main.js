@@ -1,5 +1,5 @@
 import * as WalkerSpace from "./walker-space.js";
-import * as Controls from "./controls.js";
+import { LoopControl, SpeedControl, ResetControl } from "./controls.js";
 import * as Walker from "./walker.js";
 import * as Trail from "./trail.js";
 import * as Canvas from "./canvas.js";
@@ -7,13 +7,15 @@ import * as Canvas from "./canvas.js";
 const walker = Walker.walker;
 
 document.addEventListener("DOMContentLoaded", () => {
-  walker.setSpeed(Controls.getSpeedControlValue());
-  WalkerSpace.update();
+  walker.setSpeed(SpeedControl.getValue());
+  WalkerSpace.updateAndDraw();
 });
 
-Controls.setSpeedControlRange(Walker.MIN_SPEED, Walker.MAX_SPEED);
+SpeedControl.setRange(Walker.MIN_SPEED, Walker.MAX_SPEED);
 
-Controls.addLoopControlListener((event) => {
+// -- Set control listeners
+
+LoopControl.addListener((event) => {
   if (event.start) {
     mainLoop.start();
   } else {
@@ -21,9 +23,16 @@ Controls.addLoopControlListener((event) => {
   }
 });
 
-Controls.addSpeedControlListener((event) => {
-  walker.setSpeed(Controls.getSpeedControlValue());
+SpeedControl.addListener( () => walker.setSpeed(SpeedControl.getValue()) );
+
+ResetControl.addListener(() => {
+  Trail.deleteAll();
+  Canvas.clear();
+  WalkerSpace.reset();
+  WalkerSpace.draw();
 });
+
+// ----
 
 Walker.addWalkerMoveListener(() => {
   Trail.update(walker.pos);
@@ -50,5 +59,5 @@ function run() {
 function update() {
   Canvas.clear();
   Trail.draw();
-  WalkerSpace.update();
+  WalkerSpace.updateAndDraw();
 }

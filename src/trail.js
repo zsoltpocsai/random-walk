@@ -34,6 +34,11 @@ export function draw() {
   }
 }
 
+export function deleteAll() {
+  trails.splice(0);
+  xMap.clear();
+}
+
 function getTrailInPosition(position) {
   let yMap = xMap.get(position.x);
   if (yMap) {

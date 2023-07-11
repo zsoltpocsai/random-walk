@@ -32,9 +32,7 @@ function isPositionInsideOfSpaceBoundary(position) {
           (y >= 0 && y <= SPACE_HEIGHT));
 }
 
-function draw() {
-  
-  // drawing walker
+export function draw() {
   Canvas.drawSquare(
     walker.pos.x * SCALE_FACTOR, 
     walker.pos.y * SCALE_FACTOR, 
@@ -42,12 +40,20 @@ function draw() {
   );
 }
 
-function update() {
+export function update() {
   const direction = walker.nextDirection();
   if (direction) {
     moveWalker(direction);
   }
+}
+
+export function updateAndDraw() {
+  update();
   draw();
 }
 
-export { update, SCALE_FACTOR };
+export function reset() {
+  walker.setPosition(initWalkerPosition);
+}
+
+export { SCALE_FACTOR };
