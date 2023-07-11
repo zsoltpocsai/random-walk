@@ -4,8 +4,8 @@ import * as Direction from "./direction.js";
 import { Position } from "./common.js";
 
 // Width and height must be even numbers
-const SPACE_WIDTH = 30;
-const SPACE_HEIGHT = 30;
+let SPACE_WIDTH = 60;
+let SPACE_HEIGHT = 60;
 
 // Scale factor indicates the size of one space 'tile' in pixels
 const SCALE_FACTOR = 10;
@@ -30,6 +30,25 @@ function isPositionInsideOfSpaceBoundary(position) {
   const y = position.y;
   return ((x >= 0 && x <= SPACE_WIDTH) &&
           (y >= 0 && y <= SPACE_HEIGHT));
+}
+
+function redefineInitWalkerPosition() {
+  initWalkerPosition.x = SPACE_HEIGHT / 2;
+  initWalkerPosition.y = SPACE_WIDTH / 2;
+}
+
+export function setSizeInPixels(width, height) {
+  if (width % SCALE_FACTOR > 0 ||
+      height % SCALE_FACTOR > 0) {
+        throw "Inproper width or height pixel size";
+  }
+
+  SPACE_WIDTH = width / SCALE_FACTOR;
+  SPACE_HEIGHT = height / SCALE_FACTOR;
+  Canvas.setSize(width, height);
+
+  redefineInitWalkerPosition();
+  reset();
 }
 
 export function draw() {

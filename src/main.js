@@ -1,5 +1,5 @@
 import * as WalkerSpace from "./walker-space.js";
-import { LoopControl, SpeedControl, ResetControl } from "./controls.js";
+import { LoopControl, SpeedControl, ResetControl, SizeControl } from "./controls.js";
 import * as Walker from "./walker.js";
 import * as Trail from "./trail.js";
 import * as Canvas from "./canvas.js";
@@ -11,7 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
   WalkerSpace.updateAndDraw();
 });
 
+// -- Set up controls
+
+SpeedControl.setValue(Walker.INITIAL_SPEED);
 SpeedControl.setRange(Walker.MIN_SPEED, Walker.MAX_SPEED);
+
+// ----
 
 // -- Set control listeners
 
@@ -29,6 +34,12 @@ ResetControl.addListener(() => {
   Trail.deleteAll();
   Canvas.clear();
   WalkerSpace.reset();
+  WalkerSpace.draw();
+});
+
+SizeControl.addListener((event) => {
+  WalkerSpace.setSizeInPixels(event.size, event.size);
+  Trail.deleteAll();
   WalkerSpace.draw();
 });
 

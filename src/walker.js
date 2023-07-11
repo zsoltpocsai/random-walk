@@ -18,8 +18,9 @@ const walker = {
   }
 };
 
-const MAX_SPEED = 10;
-const MIN_SPEED = 1;
+export const INITIAL_SPEED = 6;
+export const MAX_SPEED = 10;
+export const MIN_SPEED = 1;
 
 const walkerMove = {
   moveToSkip: MAX_SPEED / 2,
@@ -48,4 +49,4 @@ function addWalkerMoveListener(listener) {
   walkerMoveListener = listener;
 }
 
-export { walker, MAX_SPEED, MIN_SPEED, addWalkerMoveListener };
+export { walker, addWalkerMoveListener };

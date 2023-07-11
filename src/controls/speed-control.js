@@ -1,21 +1,20 @@
 const controlInput = document.getElementById("speed-control-input");
 const controlLabel = document.getElementById("speed-control-label");
 
-controlInput.value = 3;
-printSpeed(controlInput.value);
+updateLabel();
 
-controlInput.addEventListener("input", (event) => {
-  printSpeed(event.target.value);
-  for (const listener of speedControlListeners) {
+controlInput.addEventListener("input", () => {
+  updateLabel();
+  for (const listener of listeners) {
     listener({ speed: controlInput.value });
   }
 });
 
-function printSpeed(value) {
-  controlLabel.innerText = `Speed: ${value}`;
+function updateLabel() {
+  controlLabel.innerText = `Speed: ${controlInput.value}`;
 }
 
-const speedControlListeners = [];
+const listeners = [];
 
 export function setRange(min, max) {
   controlInput.min = min;
@@ -26,6 +25,11 @@ export function getValue() {
   return controlInput.value;
 }
 
+export function setValue(speed) {
+  controlInput.value = speed;
+  updateLabel();
+}
+
 export function addListener(listener) {
-  speedControlListeners.push(listener);
+  listeners.push(listener);
 }
