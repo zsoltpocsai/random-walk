@@ -38,9 +38,11 @@ ResetControl.addListener(() => {
 });
 
 SizeControl.addListener((event) => {
-  WalkerSpace.setSizeInPixels(event.size, event.size);
-  Trail.deleteAll();
-  WalkerSpace.draw();
+  if (WalkerSpace.isCurrentSizeDifferent(event.size, event.size)) {
+    WalkerSpace.setSizeInPixels(event.size, event.size);
+    Trail.deleteAll();
+    WalkerSpace.draw();
+  }
 });
 
 // ----

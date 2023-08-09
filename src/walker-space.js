@@ -51,6 +51,14 @@ export function setSizeInPixels(width, height) {
   reset();
 }
 
+export function isCurrentSizeDifferent(width, height) {
+  if (width == SPACE_WIDTH * SCALE_FACTOR &&
+      height == SPACE_HEIGHT * SCALE_FACTOR) {
+        return false;
+  }
+  return true;
+}
+
 export function draw() {
   Canvas.drawSquare(
     walker.pos.x * SCALE_FACTOR, 
