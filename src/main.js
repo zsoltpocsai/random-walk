@@ -3,12 +3,14 @@ import { LoopControl, SpeedControl, ResetControl, SizeControl } from "./controls
 import * as Walker from "./walker.js";
 import * as Trail from "./trail.js";
 import * as Canvas from "./canvas.js";
+import * as IterationCounter from "./iteration-counter.js";
 
 const walker = Walker.walker;
 
 document.addEventListener("DOMContentLoaded", () => {
   walker.setSpeed(SpeedControl.getValue());
   WalkerSpace.updateAndDraw();
+  IterationCounter.reset();
 });
 
 // -- Set up controls
@@ -35,6 +37,7 @@ ResetControl.addListener(() => {
   Canvas.clear();
   WalkerSpace.reset();
   WalkerSpace.draw();
+  IterationCounter.reset();
 });
 
 SizeControl.addListener((event) => {
@@ -42,6 +45,7 @@ SizeControl.addListener((event) => {
     WalkerSpace.setSizeInPixels(event.size, event.size);
     Trail.deleteAll();
     WalkerSpace.draw();
+    IterationCounter.reset();
   }
 });
 
@@ -49,6 +53,7 @@ SizeControl.addListener((event) => {
 
 Walker.addWalkerMoveListener(() => {
   Trail.update(walker.pos);
+  IterationCounter.update();
 });
 
 const mainLoop = {

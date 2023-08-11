@@ -1,6 +1,7 @@
 import * as Canvas from "./canvas.js";
 import * as WalkerSpace from "./walker-space.js";
 import { Position } from "./common.js";
+import { getColorForVisit } from "./colors.js";
 
 function Trail(pos) {
   this.pos = new Position(pos.x, pos.y);
@@ -56,26 +57,5 @@ function getTrailInPosition(position) {
     yMap.set(position.y, trail);
     xMap.set(position.x, yMap);
     return trail;
-  }
-}
-
-const visitColors = {
-  1: "#ffddcc",
-  2: "#ffbb99",
-  3: "#ff9966",
-  4: "#ff7733",
-  5: "#ff5500",
-  6: "#cc4400",
-  7: "#993300",
-  8: "#662200",
-  9: "#331100",
-  max: "#000000",
-};
-
-function getColorForVisit(visit) {
-  if (Object.hasOwn(visitColors, visit)) {
-    return visitColors[visit];
-  } else {
-    return visitColors.max;
   }
 }
